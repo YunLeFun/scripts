@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean:filter-images": "pnpm -C packages/filter-images run clean",
+    "filter-images": "tsx packages/filter-images/src/index.ts",
     "squoosh": "pnpm -C packages/compress run squoosh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

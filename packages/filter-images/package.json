@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "clean": "tsx src/clean.ts"
+  }
+}
