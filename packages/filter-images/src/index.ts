@@ -10,7 +10,9 @@ import { config } from './config'
  * @returns
  */
 function simplifyName(name: string) {
-  return name.toLowerCase().trim().replace(/ {2}/g, '-').replace(/ /g, '-')
+  return name.toLowerCase().trim()
+    .replace(/ {2}/g, '-').replace(/ /g, '-')
+    .replace('(', '').replace(')', '')
 }
 
 function getKeywords(filename: string) {
