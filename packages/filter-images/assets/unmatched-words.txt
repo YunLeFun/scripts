@@ -1,6 +1,6 @@
 board-brick,guitar
-usb-drive,traveler
-monitor,guitar
+traveler,usb-drive
+guitar,monitor
 guitar,wooden-fish
-guitar,basketball
+basketball,guitar
 traveler,weiqi

@@ -13,6 +13,9 @@ importers:
       '@types/node':
         specifier: ^18.16.3
         version: 18.16.3
+      chalk:
+        specifier: ^5.2.0
+        version: 5.2.0
       consola:
         specifier: ^3.1.0
         version: 3.1.0
@@ -25,6 +28,9 @@ importers:
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
+      picocolors:
+        specifier: ^1.0.0
+        version: 1.0.0
       tsx:
         specifier: ^3.12.7
         version: 3.12.7
@@ -37,6 +43,8 @@ importers:
       '@squoosh/lib':
         specifier: ^0.5.3
         version: 0.5.3
+
+  packages/filter-images: {}
 
 packages:
 
@@ -793,6 +801,11 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: true
+
+  /chalk@5.2.0:
+    resolution: {integrity: sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
   /character-entities-legacy@1.1.4:
@@ -2241,6 +2254,10 @@ packages:
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+    dev: true
+
+  /picocolors@1.0.0:
+    resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: true
 
   /picomatch@2.3.1:
