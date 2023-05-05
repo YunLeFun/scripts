@@ -2,31 +2,8 @@ import path from 'node:path'
 import fs from 'fs-extra'
 import consola from 'consola'
 import * as pc from 'picocolors'
+import { getKeywords, simplifyName } from '../../filename/utils'
 import { config } from './config'
-
-/**
- * Remove spaces and convert to lowercase
- * @param name
- * @returns
- */
-function simplifyName(name: string) {
-  return name.toLowerCase().trim()
-    .replace(/ {2}/g, '-').replace(/ /g, '-')
-    .replace('(', '').replace(')', '')
-}
-
-function getKeywords(filename: string) {
-  const regex = /\[(.*?)\]/
-  const matches = filename.match(regex)
-  if (matches) {
-    const keywords = matches[1].split('_')
-    return keywords.map(i => simplifyName(i)).sort()
-  }
-  else {
-    consola.error('No matches found', filename)
-    return []
-  }
-}
 
 export async function main() {
   const wordsTxt = await fs.readFile(path.resolve(config.assetsFolder, 'words.txt'), 'utf-8')

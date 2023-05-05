@@ -7,7 +7,7 @@
     "clean:filter-images": "pnpm -C packages/filter-images run clean",
     "filter-images": "tsx packages/filter-images/src/index.ts",
     "squoosh": "pnpm -C packages/compress run squoosh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -15,14 +15,17 @@
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.5",
     "@types/fs-extra": "^11.0.1",
-    "@types/node": "^18.16.3",
+    "@types/lodash": "^4.14.194",
+    "@types/node": "^20.0.0",
     "chalk": "^5.2.0",
     "consola": "^3.1.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.39.0",
     "fs-extra": "^11.1.1",
+    "lodash": "^4.17.21",
     "picocolors": "^1.0.0",
     "tsx": "^3.12.7",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^0.31.0"
   }
 }
