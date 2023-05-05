@@ -2,13 +2,13 @@
   "name": "squoosh",
   "version": "1.0.0",
   "description": "",
+  "author": "",
+  "keywords": [],
   "main": "index.js",
   "scripts": {
     "squoosh": "tsx squoosh/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
   "devDependencies": {
     "@squoosh/lib": "^0.5.3"
   }

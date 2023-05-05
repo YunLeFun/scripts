@@ -2,16 +2,18 @@
   "name": "scripts",
   "version": "1.0.0",
   "description": "",
+  "author": "",
+  "license": "MIT",
+  "keywords": [],
   "main": "index.js",
   "scripts": {
     "clean:filter-images": "pnpm -C packages/filter-images run clean",
     "filter-images": "tsx packages/filter-images/src/index.ts",
+    "lint": "eslint .",
     "squoosh": "pnpm -C packages/compress run squoosh",
-    "test": "vitest"
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.5",
     "@types/fs-extra": "^11.0.1",

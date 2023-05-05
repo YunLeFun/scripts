@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "clean": "tsx src/clean.ts",
+    "start": "tsx src/index.ts"
+  }
+}

@@ -1,5 +1,7 @@
-import fs from 'node:fs/promises'
+import path from 'node:path'
+import fs from 'fs-extra'
 import { ImagePool } from '@squoosh/lib'
+import consola from 'consola'
 
 export const imagePool = new ImagePool(2)
 
@@ -43,4 +45,30 @@ export function isImage(filename: string) {
 
 export function filter(filename: string) {
   return !filename.startsWith('.') && isImage(filename)
+}
+
+/**
+ * Compress file to jpg
+ * @param file
+ */
+export async function compressFileToJpg(filepath: string, targetFolder?: string) {
+  if (!filter(filepath))
+    return
+
+  consola.start('[Squoosh] compress', filepath)
+  const raw = await compress(filepath)
+  if (!raw)
+    return
+
+  if (!targetFolder) {
+    const filename = path.basename(filepath)
+    const fileArray = filename.split('.')
+    fileArray.pop()
+    fileArray.push('jpg')
+
+    const targetFilename = fileArray.join('.')
+    await fs.outputFile(`${targetFolder}/${targetFilename}`, raw, {})
+
+    consola.success(`[Squoosh] compress ${targetFilename}`)
+  }
 }

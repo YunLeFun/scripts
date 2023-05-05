@@ -22,7 +22,7 @@ export async function main() {
 
   const matchedKeywords: string[][] = []
 
-  let order = 1
+  // let order = 1
   files.forEach(async (filename, i) => {
     const keywords = getKeywords(filename)
     const matched = words.some(i => i.join(',') === keywords.join(','))
@@ -51,7 +51,7 @@ export async function main() {
         path.resolve(config.sourceFolder, filename),
         path.resolve(config.matchedFolder, filename),
       )
-      order += 1
+      // order += 1
     }
     else {
       consola.error(pc.cyan(i), 'Not matched', pc.yellow(keywords.toString()), filename)
