@@ -60,7 +60,7 @@ export async function compressFileToJpg(filepath: string, targetFolder?: string)
   if (!raw)
     return
 
-  if (!targetFolder) {
+  if (targetFolder) {
     const filename = path.basename(filepath)
     const fileArray = filename.split('.')
     fileArray.pop()

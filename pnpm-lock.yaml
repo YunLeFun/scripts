@@ -47,6 +47,8 @@ importers:
         specifier: ^0.31.0
         version: 0.31.0
 
+  examples/zelda-weapons: {}
+
   packages/compress:
     devDependencies:
       '@squoosh/lib':
