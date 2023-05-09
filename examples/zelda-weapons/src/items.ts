@@ -2,7 +2,7 @@ import path from 'node:path'
 import fs from 'fs-extra'
 import { consola } from 'consola'
 import { compressFileToJpg, imagePool } from '../../../packages/compress/squoosh/utils'
-import { simplifyFileName } from './utils'
+import { itemList } from './data'
 
 const assetsFolder = path.resolve(__dirname, '../assets')
 const compressedFolder = path.resolve(__dirname, '../compressed')
@@ -35,10 +35,28 @@ export async function main() {
   const files = await getFiles(assetsFolder)
 
   await Promise.all(files.map(async (file, i) => {
+    const filename = file.toLowerCase().replaceAll(' ', '-')
+    const includeItems: string[] = []
+    itemList.forEach((item) => {
+      if (filename.includes(item.key))
+        includeItems.push(item.key)
+    })
+    console.log(filename, includeItems)
     const oldPath = path.resolve(assetsFolder, file)
-    const newPath = path.resolve(distFolder, simplifyFileName(file))
 
-    console.log(simplifyFileName(file), i)
+    if (includeItems.length !== 2) {
+      consola.error('skip', filename, includeItems)
+      return
+    }
+
+    const newPath = path.resolve(distFolder, includeItems.sort().join('_') + path.extname(file))
+
+    if (fs.existsSync(newPath)) {
+      consola.error('skip', newPath)
+      return
+    }
+
+    console.log(i)
     return fs.copyFile(oldPath, newPath)
   }))
 

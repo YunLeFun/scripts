@@ -1,6 +1,7 @@
 {
   "scripts": {
     "clean": "tsx src/clean.ts",
+    "items": "tsx src/items.ts",
     "start": "tsx src/index.ts"
   }
 }
