@@ -7,6 +7,7 @@ import { itemList } from './data'
 const assetsFolder = path.resolve(__dirname, '../assets')
 const compressedFolder = path.resolve(__dirname, '../compressed')
 const distFolder = path.resolve(__dirname, '../dist')
+const repeatedFolder = path.resolve(__dirname, '../repeated')
 
 async function getFiles(folder: string) {
   const files = await fs.readdir(folder)
@@ -15,6 +16,7 @@ async function getFiles(folder: string) {
 
 async function compress() {
   await fs.ensureDir(compressedFolder)
+  await fs.ensureDir(repeatedFolder)
   const files = await getFiles(distFolder)
 
   for (let i = 0; i < files.length; i++) {
@@ -34,6 +36,14 @@ export async function main() {
 
   const files = await getFiles(assetsFolder)
 
+  const itemsSet = new Set<string>()
+  itemList.forEach((x) => {
+    itemList.forEach((y) => {
+      if (x.key !== y.key)
+        itemsSet.add([x.key, y.key].sort().join('_'))
+    })
+  })
+
   await Promise.all(files.map(async (file, i) => {
     const filename = file.toLowerCase().replaceAll(' ', '-')
     const includeItems: string[] = []
@@ -41,7 +51,6 @@ export async function main() {
       if (filename.includes(item.key))
         includeItems.push(item.key)
     })
-    console.log(filename, includeItems)
     const oldPath = path.resolve(assetsFolder, file)
 
     if (includeItems.length !== 2) {
@@ -49,19 +58,28 @@ export async function main() {
       return
     }
 
-    const newPath = path.resolve(distFolder, includeItems.sort().join('_') + path.extname(file))
+    const newFilename = includeItems.sort().join('_')
+    const newPath = path.resolve(distFolder, newFilename + path.extname(file))
 
-    if (fs.existsSync(newPath)) {
+    if (fs.existsSync(oldPath) && fs.existsSync(newPath)) {
       consola.error('skip', newPath)
+      await fs.copyFile(oldPath, path.resolve(repeatedFolder, newFilename + path.extname(file)))
       return
     }
 
-    console.log(i)
-    return fs.copyFile(oldPath, newPath)
+    if (!itemsSet.has(newFilename))
+      consola.error(newFilename)
+
+    itemsSet.delete(newFilename)
+
+    await fs.copyFile(oldPath, newPath)
+    return true
   }))
 
   await compress()
   imagePool.close()
+
+  console.log(itemsSet)
 }
 
 main()
