@@ -44,7 +44,7 @@ export async function main() {
     })
   })
 
-  await Promise.all(files.map(async (file, i) => {
+  await Promise.all(files.map(async (file, _i) => {
     const filename = file.toLowerCase().replaceAll(' ', '-')
     const includeItems: string[] = []
     itemList.forEach((item) => {
@@ -79,6 +79,7 @@ export async function main() {
   await compress()
   imagePool.close()
 
+  // eslint-disable-next-line no-console
   console.log(itemsSet)
 }
 

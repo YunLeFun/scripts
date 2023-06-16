@@ -17,7 +17,7 @@ export function getWeaponType(filename: string) {
     return ''
 }
 
-const i = 0
+// const i = 0
 export function simplifyFileName(filename: string) {
   // filename = filename.replace('sword,', '')
 

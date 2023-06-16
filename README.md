@@ -15,3 +15,7 @@ pnpm i
 # compress
 pnpm run squoosh
 ```
+
+## Examples
+
+See [examples](./examples/) for usage.

@@ -35,6 +35,6 @@ export function getKeyInfo(filename: string) {
 export function getKeywords(filename: string) {
   const info = getKeyInfo(filename)
 
-  const keywords = info.split('_').filter(i => isNaN(parseFloat(i)))
+  const keywords = info.split('_').filter(i => Number.isNaN(Number.parseFloat(i)))
   return keywords.map(i => simplifyName(i)).sort()
 }
