@@ -11,8 +11,8 @@
     "clean:filter-images": "pnpm -C packages/filter-images run clean",
     "filter-images": "tsx packages/filter-images/src/index.ts",
     "lint": "eslint .",
-    "squoosh": "pnpm -C packages/compress run squoosh",
-    "squoosh:webp": "pnpm -C packages/compress run squoosh:webp",
+    "squoosh": "pnpm -C examples/compress-images run jpg",
+    "squoosh:webp": "pnpm -C examples/compress-images run webp",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },

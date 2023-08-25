@@ -1,38 +1,36 @@
+import path from 'node:path'
 import fs from 'fs-extra'
 
 import { consola } from 'consola'
-import { compress, filter, imagePool } from './utils'
-import config from './config'
+import { green, yellow } from 'picocolors'
+import { compress, filter } from './utils'
 
-async function run() {
-  consola.start('[Squoosh] compress:webp')
-  const files = await fs.readdir(config.srcFolder)
+/**
+ * Compress file to webp
+ * @param file
+ */
+export async function compressFileToWebp(filepath: string, targetFolder?: string) {
+  if (!filter(filepath))
+    return
 
-  for (let index = 0; index < files.length; index++) {
-    const filename = files[index]
+  consola.start('[Squoosh] compress', yellow(filepath))
+  const raw = await compress(filepath, 'webp', {
+    webp: {
+      quality: 90,
+    },
+  })
+  if (!raw)
+    return
 
-    if (!filter(filename))
-      continue
-
-    consola.start('[Squoosh] compress', filename)
-
-    const raw = await compress(`${config.srcFolder}/${filename}`, 'webp', {
-      webp: {
-        quality: 90,
-      },
-    })
-    if (!raw)
-      continue
-
+  if (targetFolder) {
+    const filename = path.basename(filepath)
     const fileArray = filename.split('.')
     fileArray.pop()
     fileArray.push('webp')
+
     const targetFilename = fileArray.join('.')
-    await fs.outputFile(`${config.targetFolder}/${targetFilename}`, raw, {})
-    consola.success(`[Squoosh] compress ${targetFilename}`)
+    await fs.outputFile(`${targetFolder}/${targetFilename}`, raw, {})
+
+    consola.success(`[Squoosh] compress ${green(path.resolve(targetFolder, targetFilename))}`)
   }
-
-  await imagePool.close()
 }
-
-run()

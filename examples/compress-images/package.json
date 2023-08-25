@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "jpg": "tsx src/index.ts",
+    "webp": "tsx src/webp.ts"
+  }
+}
