@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import { ImagePool } from '@squoosh/lib'
 import consola from 'consola'
 
-import { yellow } from 'picocolors'
+import { green, yellow } from 'picocolors'
 
 export const imagePool = new ImagePool(2)
 
@@ -74,4 +74,22 @@ export async function compressFileToJpg(filepath: string, targetFolder?: string)
 
     consola.success(`[Squoosh] compress ${yellow(targetFilename)}`)
   }
+}
+
+/**
+ * output file
+ * @param filepath
+ * @param raw
+ * @param targetFolder
+ */
+export async function outputCompressedFile(suffix: 'webp' | 'png', filepath: string, raw: Uint8Array, targetFolder: string) {
+  const filename = path.basename(filepath)
+  const fileArray = filename.split('.')
+  fileArray.pop()
+  fileArray.push(suffix)
+
+  const targetFilename = fileArray.join('.')
+  await fs.outputFile(`${targetFolder}/${targetFilename}`, raw, {})
+
+  consola.success(`[Squoosh] compress ${green(path.resolve(targetFolder, targetFilename))}`)
 }

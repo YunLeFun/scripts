@@ -5,16 +5,17 @@ import { compress, filter, outputCompressedFile } from './utils'
 /**
  * Compress file to webp
  * @param file
+ * @todo
  */
-export async function compressFileToWebp(filepath: string, targetFolder?: string) {
+export async function compressFileToPng(filepath: string, targetFolder?: string) {
   if (!filter(filepath))
     return
 
   consola.start('[Squoosh] compress', yellow(filepath))
   const raw = await compress(filepath, 'webp', {
-    webp: {
-      quality: 90,
-    },
+    // oxipng: {
+    //   level: 6,
+    // },
   })
   if (!raw)
     return

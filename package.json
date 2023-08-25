@@ -14,6 +14,7 @@
     "squoosh": "pnpm -C examples/compress-images run jpg",
     "squoosh:webp": "pnpm -C examples/compress-images run webp",
     "test": "vitest",
+    "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
