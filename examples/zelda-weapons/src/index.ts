@@ -38,6 +38,7 @@ export async function main() {
     const oldPath = path.resolve(assetsFolder, file)
     const newPath = path.resolve(distFolder, simplifyFileName(file))
 
+    // eslint-disable-next-line no-console
     console.log(simplifyFileName(file), i)
     return fs.copyFile(oldPath, newPath)
   }))

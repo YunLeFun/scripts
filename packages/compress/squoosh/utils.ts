@@ -5,7 +5,13 @@ import consola from 'consola'
 
 export const imagePool = new ImagePool(2)
 
-export async function compress(filename: string) {
+export type EncodeOptions = Parameters<ReturnType<ImagePool['ingestImage']>['encode']>[0]
+
+export async function compress(filename: string, type: 'mozjpeg' | 'webp' = 'mozjpeg', encodeOptions: EncodeOptions = {
+  mozjpeg: {
+    quality: 90,
+  },
+}) {
   const imagePath = `${filename}`
   const file = await fs.readFile(imagePath)
   const image = imagePool.ingestImage(file)
@@ -16,14 +22,9 @@ export async function compress(filename: string) {
   const preprocessOptions = {}
   await image.preprocess(preprocessOptions)
 
-  const encodeOptions = {
-    mozjpeg: {
-      quality: 90,
-    },
-  }
   await image.encode(encodeOptions)
 
-  const rawEncodedImage = image.encodedWith.mozjpeg?.binary
+  const rawEncodedImage = image.encodedWith[type]?.binary
   return rawEncodedImage
 }
 
@@ -52,6 +53,32 @@ export function filter(filename: string) {
  * @param file
  */
 export async function compressFileToJpg(filepath: string, targetFolder?: string) {
+  if (!filter(filepath))
+    return
+
+  consola.start('[Squoosh] compress', filepath)
+  const raw = await compress(filepath)
+  if (!raw)
+    return
+
+  if (targetFolder) {
+    const filename = path.basename(filepath)
+    const fileArray = filename.split('.')
+    fileArray.pop()
+    fileArray.push('jpg')
+
+    const targetFilename = fileArray.join('.')
+    await fs.outputFile(`${targetFolder}/${targetFilename}`, raw, {})
+
+    consola.success(`[Squoosh] compress ${targetFilename}`)
+  }
+}
+
+/**
+ * Compress file to webp
+ * @param file
+ */
+export async function compressFileToWebp(filepath: string, targetFolder?: string) {
   if (!filter(filepath))
     return
 
